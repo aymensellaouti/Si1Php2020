@@ -33,7 +33,7 @@ $personnes = $response->fetchAll(PDO::FETCH_OBJ);
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
 </head>
 <body>
 
@@ -42,6 +42,7 @@ $personnes = $response->fetchAll(PDO::FETCH_OBJ);
     <input type="text" name="filter" class="form-control">
     <button class="btn btn-danger" type="submit">Filtrer</button>
 </form>
+<div class="container">
 <table class="table table-hover">
     <thead>
     <tr>
@@ -80,5 +81,6 @@ $personnes = $response->fetchAll(PDO::FETCH_OBJ);
     ?>
     </tbody>
 </table>
+</div>
 </body>
 </html>
