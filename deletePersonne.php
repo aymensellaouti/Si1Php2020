@@ -8,4 +8,4 @@ if (isset($_GET['id'])) {
         )
     );
 }
-header('location:connexion.php');
+header('location:personnes.php');

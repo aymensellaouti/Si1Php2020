@@ -11,7 +11,11 @@ include_once 'fragments/header.php';
 ?>
 
     <div class="container mt-5">
-        <form action="handleAddStudent.php" method="post">
+        <form
+                action="handleAddStudent.php"
+                method="post"
+                enctype="multipart/form-data"
+        >
             <div class="form-group">
                 <label for="name">Name</label>
                 <input
@@ -44,6 +48,18 @@ include_once 'fragments/header.php';
                         name="job"
                         required
                 >
+            </div>
+            <div class="custom-file">
+                <label for="image">Image</label>
+                <input
+                        type="file"
+                        class="custom-file-input"
+                        id="image"
+                        name="image"
+                        required
+                >
+                <label class="custom-file-label"
+                       for="image">Choose file</label>
             </div>
 
             <div class="form-group">
