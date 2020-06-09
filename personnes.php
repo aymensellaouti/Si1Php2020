@@ -77,7 +77,12 @@ include_once 'fragments/header.php';
                     </a>
                     <a href="detailPersonne.php?id=<?= $personne->id ?>">
                         <i class="fa fa-user fa-2x"></i>
-                    </a></td>
+                    </a>
+                    <a href="addEtudiant.php?id=<?= $personne->id ?>">
+                        <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                    </a>
+                </td>
+
             </tr>
             <?php
         }

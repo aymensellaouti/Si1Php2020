@@ -12,6 +12,7 @@ if (isset($_GET['id'])) {
     );
 
     $personne = $response->fetch(PDO::FETCH_OBJ);
+
     if(!$personne) {
         $_SESSION['error'] = "La personne d'id ${_GET['id']} n'existe pas";
         header('location:personnes.php');

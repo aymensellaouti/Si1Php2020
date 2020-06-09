@@ -2,6 +2,25 @@
 require_once 'auth/isAuthenticated.php';
 require_once 'getConnexion.php';
 
+if (isset($_GET['id'])) {
+    // JE veux récupérer la personne d'id $_GET['id']
+        // Si l'étudiant existe c'est ok je le cherche et
+            // je remplie le formulaire par les infos de la personne
+        // Sinon déclenche une erreur
+    $req = "select p.id, p.name, p.job, p.age, p.path, s.id as idSection, s.designation as section from personne p, section s where p.section_id = s.id and p.id = :id";
+    $response = $bdd->prepare($req);
+    $response->execute(
+        array(
+            'id' => $_GET['id']
+        )
+    );
+    $personne = $response->fetch(PDO::FETCH_OBJ);
+    if(!$personne) {
+        $_SESSION['error'] = "La personne d'id ${_GET['id']} n'existe pas";
+        header('location:personnes.php');
+    }
+}
+
 $req = "select * from section";
 $response = $bdd->prepare($req);
 $response->execute(array());
@@ -12,7 +31,13 @@ include_once 'fragments/header.php';
 
     <div class="container mt-5">
         <form
-                action="handleAddStudent.php"
+                action="<?php
+                if (isset($_GET['id'])) {
+                    echo "handleUpdateStudent.php?id=".$_GET['id'];
+                } else {
+                    echo "handleAddStudent.php";
+                }
+           ?>"
                 method="post"
                 enctype="multipart/form-data"
         >
@@ -25,6 +50,10 @@ include_once 'fragments/header.php';
                         placeholder="Enter name"
                         name="name"
                         required
+                        value="<?php
+                        $personne? $value = $personne->name: $value= '';
+                        echo $value;
+                        ?>"
                 >
             </div>
             <div class="form-group">
@@ -36,6 +65,10 @@ include_once 'fragments/header.php';
                         placeholder="Enter age"
                         name="age"
                         required
+                        value="<?php
+                            $personne? $value = $personne->age: $value= '';
+                            echo $value;
+                        ?>"
                 >
             </div>
             <div class="form-group">
@@ -47,6 +80,10 @@ include_once 'fragments/header.php';
                         placeholder="Enter job"
                         name="job"
                         required
+                        value="<?php
+                        $personne? $value = $personne->job: $value= '';
+                        echo $value;
+                        ?>"
                 >
             </div>
             <div class="custom-file">
@@ -68,17 +105,24 @@ include_once 'fragments/header.php';
                         required
                         name="section"
                         class="form-control select2" id="section">
+                    <?=$personne->idSection?>
+                    <option value="<?=$personne->idSection?>"><?php
+                        $personne? $value = $personne->section: $value= '';
+                        echo $value;
+                        ?></option>
                     <?php
                     foreach ($sections as $section) {
                         ?>
-                        <option value="<?= $section->id ?>"><?= $section->designation ?></option>
+                        <option value="<?= $section->id ?>">
+                            <?= $section->designation ?>
+                        </option>
                         <?php
                     }
                     ?>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">
-                Add Student
+                Edit Student
             </button>
         </form>
     </div>
